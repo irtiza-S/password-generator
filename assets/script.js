@@ -124,12 +124,25 @@ function getPasswordOptions() {
 
 // Function for getting a random element from an array
 function getRandom(arr) {
-
+  return arr[Math.floor(Math.random()*arr.length)]
 }
 
 // Function to generate password with user input
 function generatePassword() {
+  let passText = []
+  var userInput = getPasswordOptions()
+  console.log(userInput)
+  // we want to write a function which will generate a password dependent on the length specified by the user, and what they decide to confirm in relation to special, numerical and uppercase characters.
 
+  // if user wants everything in their password - upper, special, numerical
+  if (userInput.askUpperCase && userInput.askNumericChar && userInput.askSpecialChar) {
+    // we then want to loop for the length of the password, and add in the characters on each iteration
+    for (let i = 0; i < userInput.lengthOfPassword; i++) {
+      
+    }
+  }
+
+  return passText.join('')
 }
 
 // Get references to the #generate element
