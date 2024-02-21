@@ -1,5 +1,8 @@
+// Get references to the #generate element
+const generateBtn = document.querySelector('#generate');
+
 // Array of special characters to be included in password
-var specialCharacters = [
+let specialCharacters = [
   '@',
   '%',
   '+',
@@ -26,10 +29,10 @@ var specialCharacters = [
 ];
 
 // Array of numeric characters to be included in password
-var numericCharacters = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'];
+let numericCharacters = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'];
 
 // Array of lowercase characters to be included in password
-var lowerCasedCharacters = [
+let lowerCasedCharacters = [
   'a',
   'b',
   'c',
@@ -59,7 +62,7 @@ var lowerCasedCharacters = [
 ];
 
 // Array of uppercase characters to be included in password
-var upperCasedCharacters = [
+let upperCasedCharacters = [
   'A',
   'B',
   'C',
@@ -100,26 +103,26 @@ function getPasswordOptions() {
   }
 
   // if password length is less than 8 
-  if (lengthOfPassword < 8) {
+  if (passwordLength < 8) {
     alert('Minimum 8 characters.')
     passwordText.innerHTML = 'password not generated'
     return
   }
 
   // if password length is more than 128
-  if (lengthOfPassword > 128) {
+  if (passwordLength > 128) {
     alert('Maximum 128 characters')
     passwordText.innerHTML = 'password not generated'
     return
   }
 
-  var askLowerCase = confirm('Would you like lowercase characters in your password? ')
-  var askUpperCase = confirm('Would you like uppercase characters in your password? ')
-  var askNumericChar = confirm('Would you like to include numbers in your password? ')
-  var askSpecialChar = confirm('Would you like to include special characters? ')
+  let askLowerCase = confirm('Would you like lowercase characters in your password? ')
+  let askUpperCase = confirm('Would you like uppercase characters in your password? ')
+  let askNumericChar = confirm('Would you like to include numbers in your password? ')
+  let askSpecialChar = confirm('Would you like to include special characters? ')
 
   // return an object containing the user's input
-  return {lengthOfPassword, askLowerCase, askUpperCase, askNumericChar, askSpecialChar}
+  return {passwordLength, askLowerCase, askUpperCase, askNumericChar, askSpecialChar}
 }
 
 // Function for getting a random element from an array
@@ -129,24 +132,41 @@ function getRandom(arr) {
 
 // Function to generate password with user input
 function generatePassword() {
-  let passText = []
-  var userInput = getPasswordOptions()
-  console.log(userInput)
-  // we want to write a function which will generate a password dependent on the length specified by the user, and what they decide to confirm in relation to special, numerical and uppercase characters.
 
-  // if user wants everything in their password - upper, special, numerical
-  if (userInput.askUpperCase && userInput.askNumericChar && userInput.askSpecialChar) {
-    // we then want to loop for the length of the password, and add in the characters on each iteration
-    for (let i = 0; i < userInput.lengthOfPassword; i++) {
-      
-    }
+  // holds the generated password, which is eventually converted to a string
+  let passText = []
+  //store password object in userInput 
+  var userInput = getPasswordOptions()
+  //based on user input - store all possible elements. 
+  let allChars = []
+  
+  // Concatenate arrays based on user preferences
+  if (userInput.askUpperCase) {
+    allChars = allChars.concat(upperCasedCharacters);
   }
 
+  if (userInput.askNumericChar) {
+    allChars = allChars.concat(numericCharacters);
+  }
+
+  if (userInput.askSpecialChar) {
+    allChars = allChars.concat(specialCharacters);
+  }
+
+  // If none of the character types are selected, use lowercase characters by default
+  if (!userInput.askUpperCase && !userInput.askNumericChar && !userInput.askSpecialChar) {
+    allChars = lowerCasedCharacters;
+  }
+
+  //generate password - randomly selecting characters from the combined array
+  for (let i = 0; i < userInput.passwordLength; i++) {
+    let randomChar = getRandom(allChars)
+    passText.push(randomChar)
+  }
+
+  // returned the passText as a string
   return passText.join('')
 }
-
-// Get references to the #generate element
-var generateBtn = document.querySelector('#generate');
 
 // Write password to the #password input
 function writePassword() {
