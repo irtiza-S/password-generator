@@ -90,7 +90,36 @@ var upperCasedCharacters = [
 
 // Function to prompt user for password options
 function getPasswordOptions() {
+  let passwordLength = parseInt(prompt("How many characters would you like your password to be? "))
 
+  // if user input isn't a number 
+  if (isNaN(passwordLength)) {
+    alert('Please enter a number')
+    passwordText.innerHTML = 'password not generated'
+    return
+  }
+
+  // if password length is less than 8 
+  if (lengthOfPassword < 8) {
+    alert('Minimum 8 characters.')
+    passwordText.innerHTML = 'password not generated'
+    return
+  }
+
+  // if password length is more than 128
+  if (lengthOfPassword > 128) {
+    alert('Maximum 128 characters')
+    passwordText.innerHTML = 'password not generated'
+    return
+  }
+
+  var askLowerCase = confirm('Would you like lowercase characters in your password? ')
+  var askUpperCase = confirm('Would you like uppercase characters in your password? ')
+  var askNumericChar = confirm('Would you like to include numbers in your password? ')
+  var askSpecialChar = confirm('Would you like to include special characters? ')
+
+  // return an object containing the user's input
+  return {lengthOfPassword, askLowerCase, askUpperCase, askNumericChar, askSpecialChar}
 }
 
 // Function for getting a random element from an array
