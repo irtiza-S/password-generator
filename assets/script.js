@@ -1,5 +1,7 @@
-// Get references to the #generate element
-const generateBtn = document.querySelector('#generate');
+// Get references for HTML element
+const generateBtn = document.querySelector('#generate')
+const passwordText = document.querySelector('#password')
+
 
 // Array of special characters to be included in password
 let specialCharacters = [
@@ -26,7 +28,7 @@ let specialCharacters = [
   '-',
   '_',
   '.'
-];
+]
 
 // Array of numeric characters to be included in password
 let numericCharacters = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'];
@@ -59,7 +61,7 @@ let lowerCasedCharacters = [
   'x',
   'y',
   'z'
-];
+]
 
 // Array of uppercase characters to be included in password
 let upperCasedCharacters = [
@@ -89,7 +91,7 @@ let upperCasedCharacters = [
   'X',
   'Y',
   'Z'
-];
+]
 
 // Function to prompt user for password options
 function getPasswordOptions() {
@@ -135,27 +137,31 @@ function generatePassword() {
 
   // holds the generated password, which is eventually converted to a string
   let passText = []
-  //store password object in userInput 
-  var userInput = getPasswordOptions()
   //based on user input - store all possible elements. 
   let allChars = []
+  //store password object in userInput 
+  let userInput = getPasswordOptions()
   
   // Concatenate arrays based on user preferences
+  if (userInput.askLowerCase) {
+    allChars = allChars.concat(lowerCasedCharacters)
+  }
+
   if (userInput.askUpperCase) {
-    allChars = allChars.concat(upperCasedCharacters);
+    allChars = allChars.concat(upperCasedCharacters)
   }
 
   if (userInput.askNumericChar) {
-    allChars = allChars.concat(numericCharacters);
+    allChars = allChars.concat(numericCharacters)
   }
 
   if (userInput.askSpecialChar) {
-    allChars = allChars.concat(specialCharacters);
+    allChars = allChars.concat(specialCharacters)
   }
 
   // If none of the character types are selected, use lowercase characters by default
   if (!userInput.askUpperCase && !userInput.askNumericChar && !userInput.askSpecialChar) {
-    allChars = lowerCasedCharacters;
+    allChars = lowerCasedCharacters
   }
 
   //generate password - randomly selecting characters from the combined array
@@ -170,11 +176,9 @@ function generatePassword() {
 
 // Write password to the #password input
 function writePassword() {
-  var password = generatePassword();
-  var passwordText = document.querySelector('#password');
-
-  passwordText.value = password;
+  let password = generatePassword()
+  passwordText.value = password
 }
 
 // Add event listener to generate button
-generateBtn.addEventListener('click', writePassword);
+generateBtn.addEventListener('click', writePassword)
